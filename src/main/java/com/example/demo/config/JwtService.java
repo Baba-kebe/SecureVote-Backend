@@ -8,6 +8,9 @@ import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.AppUser;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -50,6 +53,13 @@ public class JwtService {
 	}
 
 	public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails ) {
+		
+		AppUser user = (AppUser) userDetails;
+		
+		extraClaims.put("role", user.getRole());
+		extraClaims.put("nom", user.getNom());
+		extraClaims.put("prenom", user.getPrenom());
+		extraClaims.put("hasVoted", user.isHasVoted());		
 		return Jwts
 				.builder()
 				.setClaims(extraClaims)

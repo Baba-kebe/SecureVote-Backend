@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class Vote {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonBackReference
 	private Candidat candidat;
 	@OneToOne()
 	private AppUser user;

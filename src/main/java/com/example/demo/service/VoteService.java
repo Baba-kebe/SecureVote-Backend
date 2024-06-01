@@ -23,8 +23,10 @@ public class VoteService {
 	public Vote setVote(VoteRequest voteRequest) {
 		
 		AppUser user = userRepository.findByNumeroNational(voteRequest.getUserId());
-		AppUser candidat = userRepository.findByNumeroNational(voteRequest.getCandidatId());
-		Candidat candidat2 = candidatRepository.findByUser(candidat);
+		user.setHasVoted(true);
+		userRepository.save(user);
+		//AppUser candidat = userRepository.findByNumeroNational(voteRequest.getCandidatId());
+		Candidat candidat2 = candidatRepository.findById(voteRequest.getCandidatId()).orElse(null);
 		
 		var vote = Vote.builder()
 				.candidat(candidat2)

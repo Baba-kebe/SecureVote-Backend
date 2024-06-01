@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +24,9 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @AllArgsConstructor
@@ -50,11 +54,13 @@ public class AppUser implements UserDetails {
 	private String numeroNational;
 	private String numeroTelephone;
 	private String sexe;
+	private boolean hasVoted;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	@OneToOne(mappedBy= "user", fetch = FetchType.EAGER)
+	@JsonBackReference
 	private Candidat candidat;
-	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
 	private Vote vote;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -87,6 +93,12 @@ public class AppUser implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
+	@Override
+	public String toString() {
+		return "user{"
+				+ "id = "+this.id
+				+ ", nom =  "+ this.nom
+				+ ", prenom = "+this.prenom;
+	}
 
 }

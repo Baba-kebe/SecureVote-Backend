@@ -27,12 +27,13 @@ public class SecurityConfiguration {
 		.sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.csrf(csrf -> csrf.disable())
 		.cors(Customizer.withDefaults())
-		.authorizeHttpRequests(ar->ar.requestMatchers("/api/vs/auth/**").permitAll())
-		.authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+		.authorizeHttpRequests(ar->ar.requestMatchers("/api/vs/auth/**").permitAll()
+				.anyRequest().authenticated())
 		.authenticationProvider(authenticationProvider)
 		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();
 	}
+	
 
 }

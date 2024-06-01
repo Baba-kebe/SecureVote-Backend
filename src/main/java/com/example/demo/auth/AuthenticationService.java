@@ -32,6 +32,7 @@ public class AuthenticationService {
 				.birthDate(LocalDate.parse(request.getBirthDate()))
 				.prenom(request.getPrenom())
 				.sexe(request.getSexe())
+				.hasVoted(false)
 				.numeroNational(request.getNumeroNational())
 				.numeroTelephone(request.getNumeroTelephone())
 				.password(passwordEncoder.encode(request.getPassword()))

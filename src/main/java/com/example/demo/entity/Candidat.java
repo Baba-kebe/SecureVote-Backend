@@ -3,9 +3,10 @@ package com.example.demo.entity;
 import java.util.List;
 import java.util.UUID;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,8 +31,20 @@ public class Candidat {
 	private AppUser user;
 	private String photo;
 	private String projet;
-	@OneToMany(mappedBy = "candidat")
+	private String labelParti;
+	private String nomParti;
+	
+	@OneToMany(mappedBy = "candidat", fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private List<Vote> vote;
 	
+	@Override
+	public String toString() {
+		return "candidat{"
+				+ "id = "+this.id
+				+ ", user =  "+ this.user
+				+ ", projet = "+this.projet
+				+ " ,labelParti = "+this.labelParti;
+	}
 
 }

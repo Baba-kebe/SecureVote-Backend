@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.AppUser;
@@ -19,7 +21,6 @@ public class CandidatService {
 	private final ICandidatRepository candidatRepository;
 	
 	public Candidat addCandidat(CandidatRequest candidatRequest) {
-		
 		AppUser user = userRepository.findByNumeroNational(candidatRequest.getUserId());
 		user.setRole(Role.CANDIDAT);
 		
@@ -28,6 +29,8 @@ public class CandidatService {
 		var candidat = Candidat.builder()
 				.photo(candidatRequest.getImage())
 				.user(user)
+				.labelParti(candidatRequest.getLabelParti())
+				.nomParti(candidatRequest.getNomParti())
 				.projet(candidatRequest.getProjet())
 				.build();
 		return this.candidatRepository.save(candidat);
@@ -38,6 +41,11 @@ public class CandidatService {
 		AppUser user = userRepository.findByNumeroNational(numeroNational);
 		
 		return this.candidatRepository.findByUser(user);
+	}
+
+	public List<Candidat> getAll() {
+		// TODO Auto-generated method stub
+		return this.candidatRepository.findAll();
 	}
 	
 
